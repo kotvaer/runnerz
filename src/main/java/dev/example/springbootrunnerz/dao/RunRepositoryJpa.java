@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface RunRepository extends JpaRepository<Run, Long> {
+public interface RunRepositoryJpa extends JpaRepository<Run, Long> {
     //@Query("select r from Run r where r.location = :location")
     List<Run> findAllByLocation(Location location);
 }

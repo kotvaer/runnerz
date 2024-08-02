@@ -1,7 +1,7 @@
 package dev.example.springbootrunnerz.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.example.springbootrunnerz.dao.RunRepository;
+import dev.example.springbootrunnerz.dao.RunRepositoryJpa;
 import dev.example.springbootrunnerz.pojo.Runs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,21 +16,21 @@ import java.io.InputStream;
 public class RunJsonDataLoader implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(RunJsonDataLoader.class);
 
-    private RunRepository runRepository;
+    private RunRepositoryJpa runRepositoryJpa;
     private ObjectMapper objectMapper;
 
-    public RunJsonDataLoader(RunRepository runRepository, ObjectMapper objectMapper) {
-        this.runRepository = runRepository;
+    public RunJsonDataLoader(RunRepositoryJpa runRepositoryJpa, ObjectMapper objectMapper) {
+        this.runRepositoryJpa = runRepositoryJpa;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        if (runRepository.count() == 0) {
+        if (runRepositoryJpa.count() == 0) {
             try (InputStream inputStream = TypeReference.class.getClassLoader().getResourceAsStream("data/runs.json")) {
                 Runs allRuns = objectMapper.readValue(inputStream, Runs.class);
                 log.info("Reading {} runs from JSON data and saving to in-memory collection.", allRuns.runs().size());
-                runRepository.saveAll(allRuns.runs());
+                runRepositoryJpa.saveAll(allRuns.runs());
             }catch (IOException e) {
                throw new RuntimeException("Failed to read JSON data",e);
             }

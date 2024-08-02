@@ -2,7 +2,7 @@ package dev.example.springbootrunnerz;
 
 import dev.example.springbootrunnerz.pojo.Location;
 import dev.example.springbootrunnerz.pojo.Run;
-import dev.example.springbootrunnerz.dao.RunRepository;
+import dev.example.springbootrunnerz.dao.RunRepositoryJpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +21,7 @@ public class SpringBootRunnerApplication {
     }
 
     //@Bean
-    CommandLineRunner runner(RunRepository runRepository) {
+    CommandLineRunner runner(RunRepositoryJpa runRepositoryJpa) {
         return args -> {
             log.info("Run:{}", "The project is started.");
             Run data1 = new Run(
@@ -38,8 +38,8 @@ public class SpringBootRunnerApplication {
                     10,
                     Location.OUTDOOR
                     );
-            runRepository.save(data1);
-            runRepository.save(data2);
+            runRepositoryJpa.save(data1);
+            runRepositoryJpa.save(data2);
         };
     }
 

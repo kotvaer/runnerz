@@ -1,10 +1,12 @@
 package dev.example.springbootrunnerz.controller;
 
-import dev.example.springbootrunnerz.pojo.Run;
 import dev.example.springbootrunnerz.Service.RunService;
+import dev.example.springbootrunnerz.pojo.Run;
+import dev.example.springbootrunnerz.Service.RunServiceJpa;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,7 @@ public class RunController {
     private final RunService runService;
 
     @Autowired
-    public RunController(RunService runRepository) {
+    public RunController( @Qualifier("runServiceMapper") RunService runRepository) {
         this.runService = runRepository;
     }
 
@@ -40,7 +42,6 @@ public class RunController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void create(@Validated @RequestBody Run run) {
-
         runService.save(run);
     }
 
@@ -50,15 +51,15 @@ public class RunController {
         runService.updateById(id, run);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    /*@ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         runService.deleteById(id);
-    }
+    }*/
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping
-    public void deleteAll(@RequestParam List<Integer> ids) {
+    @DeleteMapping("/{ids}")
+    public void deleteAll(@PathVariable List<Integer> ids) {
         ids.forEach(runService::deleteById);
     }
 
