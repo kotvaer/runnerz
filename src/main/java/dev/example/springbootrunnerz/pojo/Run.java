@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "run")
 public class Run {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
     @Column(unique = true, nullable = false)
