@@ -1,6 +1,6 @@
 learn git
 
-git is a vcs
+git is a vas
 
 
 
