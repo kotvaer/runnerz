@@ -30,4 +30,13 @@ jobs:
         with:
           name: Package
           path: staging
+          
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        if: github.event_name == 'push'
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/*.jar
+          tag: ${{ github.ref }}
+          file_glob: true
 
