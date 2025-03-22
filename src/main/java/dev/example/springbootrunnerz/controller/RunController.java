@@ -57,6 +57,7 @@ public class RunController {
         runService.deleteById(id);
     }*/
 
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{ids}")
     public void deleteAll(@PathVariable List<Integer> ids) {
